@@ -16,5 +16,5 @@ def _confirm_existence_and_get_from_env(variable_name) -> str:
     return _
 
 GOOGLE_API_KEY = _confirm_existence_and_get_from_env("GOOGLE_API_KEY")
-DEMOGRAPHIC_GENERATOR_LLM = getenv("DEMOGRAPHIC_GENERATOR_LLM", "gemini-2.5-flash")
+DEMOGRAPHIC_GENERATOR_LLM = getenv("DEMOGRAPHIC_GENERATOR_LLM", "gemini-2.5-pro")
 PERSONA_GENERATOR_LLM = getenv("PERSONA_GENERATOR_LLM", "gemini-2.5-pro")
