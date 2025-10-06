@@ -2,7 +2,8 @@
 Streamlit Persona Generator Page
 """
 
-from src.generator import parse_demographic, generate_persona
+from io import BytesIO
+from src.generator import generate_persona, parse_demographic, persona_to_pdf
 import streamlit as st
 from time import sleep
 
@@ -136,3 +137,16 @@ if len(st.session_state.messages) == 7:
     st.session_state.persona = persona
     
     st.rerun()
+
+if len(st.session_state.messages) == 8:
+    pdf = persona_to_pdf(st.session_state.persona)
+    pdf_buffer = BytesIO()
+    pdf.output(pdf_buffer)
+    pdf_buffer.seek(0)
+    
+    st.download_button(
+        label="Download Persona",
+        data=pdf_buffer,
+        file_name=f"AI Persona - {st.session_state.persona.name}.pdf",
+        mime="application/pdf"
+    )

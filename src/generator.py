@@ -3,6 +3,7 @@ Persona Generator Module
 """
 
 from config import DEMOGRAPHIC_GENERATOR_LLM, PERSONA_GENERATOR_LLM
+import fpdf
 from langchain_core.prompts import PromptTemplate
 from pydantic import BaseModel, Field
 from src.models import get_model
@@ -80,6 +81,91 @@ Generate a persona that plausibly lives and works in or around **Noida, Uttar Pr
         target_demographic=parsed_demographic
     ))
 
+class PersonaPDF(fpdf.FPDF):
+    """
+    PDF Representation of a generated persona.
+    """
+    
+    def footer(self):
+        self.set_y(-15)
+        self.set_font("Courier", style="I", size=8)
+        self.write(text="AI Audience Persona Generator, Made with <3 by Saksham (")
+        self.write(text="https://github.com/saksham1341", link="https://github.com/saksham1341")
+        self.write(text=")")
+
+def persona_to_pdf(persona: PersonaGeneratorOutput) -> PersonaPDF:
+    _ = PersonaPDF()
+    _.set_auto_page_break(auto=True, margin=30)
+    _.add_page()
+    _.set_font(family="Courier", style="B", size=16)
+    _.cell(0, 0, "AI Generated Audience Persona", new_x="LMARGIN", new_y="NEXT")
+    _.ln()
+    _.ln()
+    _.set_font(family="Courier", style="B", size=14)
+    _.cell(0, 0, "Basic Details", new_x="LMARGIN", new_y="NEXT")
+    _.ln()
+    _.set_font(family="Courier", style="B", size=12)
+    _.write(text="Name: ")
+    _.set_font(family="Courier", style="", size=12)
+    _.write(text=persona.name)
+    _.ln()
+    _.set_font(family="Courier", style="B", size=12)
+    _.write(text="Age: ")
+    _.set_font(family="Courier", style="", size=12)
+    _.write(text=persona.age)
+    _.ln()
+    _.set_font(family="Courier", style="B", size=12)
+    _.write(text="Job: ")
+    _.set_font(family="Courier", style="", size=12)
+    _.write(text=persona.job)
+    _.ln()
+    _.set_font(family="Courier", style="B", size=12)
+    _.write(text="Location: ")
+    _.set_font(family="Courier", style="", size=12)
+    _.write(text=persona.location)
+    _.ln()
+    _.set_font(family="Courier", style="B", size=12)
+    _.write(text="Education: ")
+    _.set_font(family="Courier", style="", size=12)
+    _.write(text=persona.education)
+    _.ln()
+    _.ln()
+    _.set_font(family="Courier", style="B", size=14)
+    _.cell(0, 0, "Background", new_x="LMARGIN", new_y="NEXT")
+    _.ln()
+    _.set_font(family="Courier", style="", size=12)
+    _.write(text=persona.background)
+    _.ln()
+    _.ln()
+    _.set_font(family="Courier", style="B", size=14)
+    _.cell(0, 0, "Personality", new_x="LMARGIN", new_y="NEXT")
+    _.ln()
+    _.set_font(family="Courier", style="", size=12)
+    for x in persona.personality:
+        _.cell(10)
+        _.write(text="+ " + x)
+        _.ln()
+    _.ln()
+    _.set_font(family="Courier", style="B", size=14)
+    _.cell(0, 0, "Goals", new_x="LMARGIN", new_y="NEXT")
+    _.ln()
+    _.set_font(family="Courier", style="", size=12)
+    for x in persona.goals:
+        _.cell(10)
+        _.write(text="+ " + x)
+        _.ln()
+    _.ln()
+    _.set_font(family="Courier", style="B", size=14)
+    _.cell(0, 0, "Frustrations", new_x="LMARGIN", new_y="NEXT")
+    _.ln()
+    _.set_font(family="Courier", style="", size=12)
+    for x in persona.frustrations:
+        _.cell(10)
+        _.write(text="+ " + x)
+        _.ln()
+    
+    return _
+
 if __name__ == "__main__":
     product_description = "FlexiFlow is an all-in-one financial management app designed specifically for the modern freelancer and gig economy worker. Our platform automates invoicing, tracks business expenses in real-time, and provides clear quarterly tax estimations to eliminate financial surprises. We also offer integrated tools for setting up and contributing to retirement funds like a SEP IRA, helping independent professionals build long-term wealth with an unstable income."
     target_demographic = "Our core audience consists of freelancers, solopreneurs, and independent contractors in creative and tech fields, such as graphic designers, freelance developers, and digital marketing consultants. They are typically between 25 and 40 years old. This group is tech-savvy, values personal freedom and flexibility, and often works remotely from major urban centers. They struggle with the unpredictability of fluctuating income streams and find the complexities of self-employment taxes and retirement planning overwhelming."
@@ -90,3 +176,6 @@ if __name__ == "__main__":
     print("\n" + "=" * 50 + "\n" + "Target Demographic" + "\n" + "=" * 50 + "\n", target_demographic)
     print("\n" + "=" * 50 + "\n" + "Parsed Demographic" + "\n" + "=" * 50 + "\n", parsed_demographic)
     print("\n" + "=" * 50 + "\n" + "Generated Persona" + "\n" + "=" * 50 + "\n", generated_persona)
+    
+    pdf = persona_to_pdf(generated_persona)
+    pdf.output("persona.pdf")
