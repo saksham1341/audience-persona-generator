@@ -13,4 +13,4 @@ def _confirm_existence_and_get_from_env(variable_name) -> str:
     if _ is None:
         raise RuntimeError(f"`{variable_name}` not found in the environment.")
 
-GEMINI_API_KEY = _confirm_existence_and_get_from_env("GEMINI_API_KEY")
+GOOGLE_API_KEY = _confirm_existence_and_get_from_env("GOOGLE_API_KEY")
