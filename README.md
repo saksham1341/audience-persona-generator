@@ -4,6 +4,10 @@ Stop guessing. Know your audience instantly. This project is a web application b
 
 It helps marketers, founders, and creators build better products and launch smarter campaigns by truly understanding who they're selling to.
 
+## Live
+
+Hosted on render [here](https://audience-persona-generator.onrender.com/)!
+
 ![Sample](sample.gif)
 
 ## How It Works
