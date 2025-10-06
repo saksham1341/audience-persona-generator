@@ -6,7 +6,6 @@ from config import DEMOGRAPHIC_GENERATOR_LLM, PERSONA_GENERATOR_LLM
 from langchain_core.prompts import PromptTemplate
 from pydantic import BaseModel, Field
 from src.models import get_model
-from src.persona import Persona
 
 class DemographicParserOutput(BaseModel):
     """
