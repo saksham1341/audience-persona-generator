@@ -14,6 +14,14 @@ class BaseLLMModel:
     
     langchain_model: BaseChatModel
 
+models_dict: dict[str, type] = {}
+
+def get_model(key: str) -> BaseLLMModel:
+    if key not in models_dict:
+        raise RuntimeError(f"Model key `{key}` not found!")
+    
+    return models_dict[key]()
+
 class Gemini25Pro(BaseLLMModel):
     """
     Gemini 2.5 Pro
@@ -27,6 +35,8 @@ class Gemini25Pro(BaseLLMModel):
             google_api_key=GOOGLE_API_KEY,
         )
 
+models_dict["gemini-2.5-pro"] = Gemini25Pro
+
 class Gemini25Flash(BaseLLMModel):
     """
     Gemini 2.5 Flash
@@ -39,3 +49,5 @@ class Gemini25Flash(BaseLLMModel):
             model="gemini-2.5-flash",
             google_api_key=GOOGLE_API_KEY,
         )
+
+models_dict["gemini-2.5-flash"] = Gemini25Flash
