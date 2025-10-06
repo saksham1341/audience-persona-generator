@@ -4,6 +4,8 @@ Stop guessing. Know your audience instantly. This project is a web application b
 
 It helps marketers, founders, and creators build better products and launch smarter campaigns by truly understanding who they're selling to.
 
+![Sample](sample.gif)
+
 ## How It Works
 
 The generator uses a sophisticated two-step AI process to create nuanced and detailed personas:
