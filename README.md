@@ -2,6 +2,20 @@
 
 **WIP**
 
+## Run the project
+
+```sh
+# Activate virtual environment
+python -m venv .venv
+source .venv/bin/activate
+
+# Install dependencies
+python -m pip install -r requirements.txt
+
+# Run the streamlit app
+dotenv run -- streamlit run app.py
+```
+
 ## Project Structure
 
 ```txt
