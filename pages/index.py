@@ -3,7 +3,9 @@ Landing page.
 """
 
 import streamlit as st
+from github_link_component import github_link
 
+github_link("https://github.com/saksham1341/audience-persona-generator/")
 st.title("AI Audience Persona Generator")
 st.subheader("Stop Guessing. Know Your Audience Instantly.")
 

@@ -6,7 +6,9 @@ from io import BytesIO
 from src.generator import generate_persona, parse_demographic, persona_to_pdf
 import streamlit as st
 from time import sleep
+from github_link_component import github_link
 
+github_link("https://github.com/saksham1341/audience-persona-generator/")
 st.title("Generate an audience persona for your product")
 st.divider()
 
